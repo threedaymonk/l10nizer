@@ -1,0 +1,37 @@
+grammar HtmlErb
+  rule document
+    (erb_control / whitespace / text / tag)* <Document>
+  end
+
+  rule erb_control
+    "<%" [^=] ruby_code "%>" <Control>
+  end
+
+  rule tag
+    "<" (erb_eval / [^>])+ ">" <Tag>
+  end
+
+  rule whitespace
+    [\s]+ <Whitespace>
+  end
+
+  rule optional_whitespace
+    [\s]* <Whitespace>
+  end
+
+  rule text
+    (optional_whitespace erb_eval / optional_whitespace word)+ <Text>
+  end
+
+  rule word
+    [^<\s]+ <Word>
+  end
+
+  rule erb_eval
+    "<%=" ruby_code "%>" <Eval>
+  end
+
+  rule ruby_code
+    (("%" [^>]) / [^%])+
+  end
+end
