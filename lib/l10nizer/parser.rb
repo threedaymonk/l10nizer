@@ -1,4 +1,5 @@
 require "treetop"
+require "polyglot"
 require "l10nizer/grammar"
 
 module HtmlErb
