@@ -32,8 +32,26 @@ module L10nizer
   end
 
   class TextNode < BasicNode
+    def l10n
+      _, text = vars_and_text
+      text ? {key => text} : {}
+    end
+
+    def to_s
+      vars, _ = vars_and_text
+      return super unless vars
+
+      params = ['"' + key + '"']
+      vars.each_with_index do |v, i|
+        params << %{:#{variable_name(i)} => #{v}}
+      end
+
+      %{<%= t(#{params * ", "}) %>}
+    end
+
+  private
     def children
-      @node.elements.map{ |e| e.elements }.flatten.map{ |e| NodeWrapperFactory.wrap(e) }
+      @node.children.map{ |e| NodeWrapperFactory.wrap(e) }
     end
 
     def variable_name(index)
@@ -58,23 +76,6 @@ module L10nizer
           [vars, l10n]
         end
       )
-    end
-
-    def l10n
-      _, text = vars_and_text
-      text ? {key => text} : {}
-    end
-
-    def to_s
-      vars, _ = vars_and_text
-      return super unless vars
-
-      params = ['"' + key + '"']
-      vars.each_with_index do |v, i|
-        params << %{:#{variable_name(i)} => #{v}}
-      end
-
-      %{<%= t(#{params * ", "}) %>}
     end
 
     def key

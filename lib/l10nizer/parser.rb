@@ -4,14 +4,11 @@ require "l10nizer/grammar"
 
 module HtmlErb
   class Document < Treetop::Runtime::SyntaxNode
-    def interpret
-      elements.map{ |e| e.interpret } * ", "
-    end
   end
 
   class Text < Treetop::Runtime::SyntaxNode
-    def interpret
-      "(TEXT #{children.map{ |e| e.interpret } * ", "})"
+    def children
+      elements.map{ |e| e.elements }.flatten
     end
   end
 
