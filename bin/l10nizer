@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+require "l10nizer"
+require "yaml"
+
+keygen = L10nizer::KeyGenerator.new
+l10ns = {}
+
+templates = Dir["app/views/**/*.html.erb"]
+templates.each do |path|
+  keygen.namespace = path.split("/")[2 .. -2] * "_"
+  source = File.read(path)
+  l10nizer = L10nizer::Processor.new(source, keygen)
+  l10ns.merge!(l10nizer.l10ns)
+  File.open(path, "w") do |f|
+    f << l10nizer.reformed
+  end
+end
+
+File.open("config/locales/l10nized.yml", "w") do |f|
+  f << l10ns.to_yaml
+end
