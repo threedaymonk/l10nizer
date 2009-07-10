@@ -63,16 +63,22 @@ class ProcessorTest < Test::Unit::TestCase
     end
   end
 
-  context "when inline eval stands on its own" do
-    setup do
-      @html = "<p><%= 27 %></p>"
-      @l10nizer = L10nizer::Processor.new(@html, DumbKeyGenerator.new)
-    end
+  should "not try to localise inline eval on its own" do
+    html = "<p><%= 27 %></p>"
+    l10nizer = L10nizer::Processor.new(html, DumbKeyGenerator.new)
+    assert_equal html, l10nizer.reformed
+  end
 
-    should "not try to localise it" do
-      expected = @html
-      assert_equal expected, @l10nizer.reformed
-    end
+  should "not try to localise an HTML comment" do
+    html = "<!-- <p><%= 27 %></p> --> <p> <!-- fooo --> </p>"
+    l10nizer = L10nizer::Processor.new(html, DumbKeyGenerator.new)
+    assert_equal html, l10nizer.reformed
+  end
+
+  should "not try to localise Javascript" do
+    html = "<script>var a = 3;</script> <script>var b = 'b';</script>"
+    l10nizer = L10nizer::Processor.new(html, DumbKeyGenerator.new)
+    assert_equal html, l10nizer.reformed
   end
 
   context "when parsing a sample document" do

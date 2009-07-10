@@ -1,6 +1,14 @@
 grammar HtmlErb
   rule document
-    (erb_control / whitespace / just_erb_eval / text / tag)* <Document>
+    (html_comment / javascript / erb_control / whitespace / just_erb_eval / text / tag)* <Document>
+  end
+
+  rule html_comment
+    "<!--" ([^\-] / "-" [^\-] / "--" [^>])* "-->"
+  end
+
+  rule javascript
+    "<script" ([^<] / "<" [^/] / "</" [^s] / "</s" [^c] / "</sc" [^r] / "</scr" [^i] / "</scri" [^p] / "</scrip" [^t] / "</script" [^>"])* "</script>"
   end
 
   rule erb_control
