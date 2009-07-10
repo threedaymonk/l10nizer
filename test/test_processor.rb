@@ -4,7 +4,7 @@ require "test/unit"
 require "l10nizer/processor"
 require "shoulda"
 
-class L10nizerProcessorTest < Test::Unit::TestCase
+class ProcessorTest < Test::Unit::TestCase
 
   class DumbKeyGenerator
     def call(string)
