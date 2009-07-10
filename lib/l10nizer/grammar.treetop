@@ -1,6 +1,6 @@
 grammar HtmlErb
   rule document
-    (erb_control / whitespace / text / tag)* <Document>
+    (erb_control / whitespace / just_erb_eval / text / tag)* <Document>
   end
 
   rule erb_control
@@ -17,6 +17,10 @@ grammar HtmlErb
 
   rule optional_whitespace
     [\s]* <Whitespace>
+  end
+
+  rule just_erb_eval
+    (optional_whitespace erb_eval)+
   end
 
   rule text

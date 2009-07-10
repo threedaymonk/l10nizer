@@ -1,0 +1,34 @@
+<li id="action_<%=h thing.whatsit.id %>" class="item underway">
+  <div class="wrap">
+    <div class="placeholder">
+      <%- if thing.whatsit.identity? -%>
+        <%- if thing.whatsit.identity.processed? -%>
+          <%= image_tag thing.whatsit.identity.url(:medium) %>
+        <%- else -%>
+          <%= t("general.processing_image") %>
+        <%- end -%>
+      <%- end -%>
+    </div>
+    <h3>
+      <% link_to(thing) do %>
+        <span><%=h thing.whatsit.name %></span><%=h thing.short_address %>
+      <% end %>
+    </h3>
+  </div>
+  <div class="details">
+    <div class="format">
+      <h4 class="obfuscate">Skills</h4>
+      <ul class="skills">
+        <% thing.whatsit.skills.each do |skill| %>
+          <li class="skill">
+            <%= skill_icon(skill, :small) %>
+          </li>
+        <% end %>
+        <li class="engagement">
+          <%= engagement_icon(4, :small) %>
+        </li>
+      </ul>
+      <%=h truncate(thing.whatsit.short_description, :length => 130) %>
+    </div>
+  </div>
+</li>
