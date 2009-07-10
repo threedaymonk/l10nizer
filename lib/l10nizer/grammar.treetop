@@ -4,19 +4,19 @@ grammar HtmlErb
   end
 
   rule erb_control
-    "<%" [^=] ruby_code "%>" <Control>
+    "<%" [^=] ruby_code "%>"
   end
 
   rule tag
-    "<" (erb_eval / [^>])+ ">" <Tag>
+    "<" (erb_eval / [^>])+ ">"
   end
 
   rule whitespace
-    [\s]+ <Whitespace>
+    [\s]+
   end
 
   rule optional_whitespace
-    [\s]* <Whitespace>
+    [\s]*
   end
 
   rule just_erb_eval
@@ -28,7 +28,7 @@ grammar HtmlErb
   end
 
   rule word
-    [^<\s]+ <Word>
+    [^<\s]+
   end
 
   rule erb_eval

@@ -14,16 +14,4 @@ module HtmlErb
 
   class Eval < Treetop::Runtime::SyntaxNode
   end
-
-  class Tag < Treetop::Runtime::SyntaxNode
-  end
-
-  class Control < Treetop::Runtime::SyntaxNode
-  end
-
-  class Whitespace < Treetop::Runtime::SyntaxNode
-  end
-
-  class Word < Treetop::Runtime::SyntaxNode
-  end
 end
