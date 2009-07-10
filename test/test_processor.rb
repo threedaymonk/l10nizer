@@ -1,10 +1,10 @@
 $:.unshift File.join(File.dirname(__FILE__), "..", "lib")
 
 require "test/unit"
-require "l10nizer"
+require "l10nizer/processor"
 require "shoulda"
 
-class L10nizerTest < Test::Unit::TestCase
+class L10nizerProcessorTest < Test::Unit::TestCase
 
   class DumbKeyGenerator
     def call(string)
