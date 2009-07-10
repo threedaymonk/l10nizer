@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.default_executable = %q{l10nizer}
   s.email = %q{pbattley@gmail.com}
   s.executables = ["l10nizer"]
-  s.files = ["Rakefile", "bin/l10nizer", "test/samples", "test/samples/input.html.erb", "test/samples/output.html.erb", "test/test_key_generator.rb", "test/test_l10nizer.rb", "test/test_processor.rb", "lib/l10nizer", "lib/l10nizer/grammar.treetop", "lib/l10nizer/keygen.rb", "lib/l10nizer/node.rb", "lib/l10nizer/parser.rb", "lib/l10nizer/processor.rb", "lib/l10nizer/version.rb", "lib/l10nizer.rb"]
+  s.files = ["Rakefile", "bin/l10nizer", "test/samples", "test/samples/input.html.erb", "test/samples/output.html.erb", "test/test_key_generator.rb", "test/test_processor.rb", "lib/l10nizer", "lib/l10nizer/grammar.treetop", "lib/l10nizer/keygen.rb", "lib/l10nizer/node.rb", "lib/l10nizer/parser.rb", "lib/l10nizer/processor.rb", "lib/l10nizer/version.rb", "lib/l10nizer.rb"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.4}
   s.summary = %q{Automatically extract strings from ERB templates and replace with calls to t()}
