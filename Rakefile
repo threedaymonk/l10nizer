@@ -37,7 +37,7 @@ spec = Gem::Specification.new do |s|
   s.add_dependency("treetop",  "~> 1.2.6")
   s.add_dependency("polyglot", "~> 0.2.5")
 
-  s.add_development_dependency("shoulda")
+  s.add_development_dependency("thoughtbot-shoulda")
 end
 
 Rake::GemPackageTask.new(spec) do |pkg|
