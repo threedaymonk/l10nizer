@@ -30,6 +30,10 @@ class KeyGeneratorTest < Test::Unit::TestCase
       assert_equal "a_thing_1", @keygen.call("A thing")
       assert_equal "a_thing_2", @keygen.call("A Thing")
     end
+
+    should "generate_non_empty_keys_for_punctuation" do
+      assert_not_equal "", @keygen.call("<>!@#%#.,")
+    end
   end
 
   context "with namespacing" do
