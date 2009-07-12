@@ -1,13 +1,17 @@
 #!/usr/bin/env ruby
 require "l10nizer"
 require "yaml"
+require "fileutils"
+
+Dir.chdir(ARGV.first) if ARGV.first
+templates = Dir["app/views/**/*.html.erb"]
+raise "Can't find any templates in app/views." unless templates.any?
 
 keygen = L10nizer::KeyGenerator.new
 l10ns = {}
 
-templates = Dir["app/views/**/*.html.erb"]
 templates.each do |path|
-  keygen.namespace = path.split("/")[2 .. -2] * "_"
+  keygen.namespace = path.split("/")[2]
   source = File.read(path)
   l10nizer = L10nizer::Processor.new(source, keygen)
   l10ns.merge!(l10nizer.l10ns)
@@ -16,6 +20,13 @@ templates.each do |path|
   end
 end
 
+l10ns = l10ns.inject({}){ |hash, (key, value)|
+  parts = key.split(".")
+  parts[0 .. -2].inject(hash){ |h, k| h[k] ||= {} }[parts.last] = value
+  hash
+}
+
+FileUtils.mkdir_p("config/locales")
 File.open("config/locales/l10nized.yml", "w") do |f|
   f << l10ns.to_yaml
 end
