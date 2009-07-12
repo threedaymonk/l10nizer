@@ -81,6 +81,12 @@ class ProcessorTest < Test::Unit::TestCase
     assert_equal html, l10nizer.reformed
   end
 
+  should "not try to localise control inside a tag" do
+    html = %{<div class="user-skills block <% unless @user.skills.any? %>blank<% end %>">}
+    l10nizer = L10nizer::Processor.new(html, DumbKeyGenerator.new)
+    assert_equal html, l10nizer.reformed
+  end
+
   context "when parsing a sample document" do
     setup do
       @html     = File.read(File.join(File.dirname(__FILE__), "samples", "input.html.erb"))

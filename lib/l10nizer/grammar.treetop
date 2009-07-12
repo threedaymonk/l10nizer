@@ -16,7 +16,7 @@ grammar HtmlErb
   end
 
   rule tag
-    "<" (erb_eval / [^>])+ ">"
+    "<" (erb_control / erb_eval / [^>])+ ">"
   end
 
   rule whitespace
