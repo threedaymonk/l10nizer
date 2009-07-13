@@ -36,7 +36,7 @@ class ProcessorTest < Test::Unit::TestCase
     end
 
     should "pass values to t()" do
-      expected = %{<%= t("string_a_with_b", :a => 27, :b => 42) %>}
+      expected = %{<%= t("string_a_with_b", :a => (27), :b => (42)) %>}
       assert_equal expected, @l10nizer.reformed
     end
 
@@ -53,7 +53,7 @@ class ProcessorTest < Test::Unit::TestCase
     end
 
     should "pass values to t() reusing placeholder variables" do
-      expected = %{<p><%= t("string_a_with_b", :a => 27, :b => 42) %></p><p><%= t("another_a", :a => 'x') %></p>}
+      expected = %{<p><%= t("string_a_with_b", :a => (27), :b => (42)) %></p><p><%= t("another_a", :a => ('x')) %></p>}
       assert_equal expected, @l10nizer.reformed
     end
 

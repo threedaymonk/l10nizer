@@ -19,7 +19,7 @@ l10nizer will change it to:
 
     <div class="thing">
       <h1><%= t("things.some_heading") %></h1>
-      <p><%= t("things.this_thing_is_called_a", :a => h(@thing.name)) %></p>
+      <p><%= t("things.this_thing_is_called_a", :a => (h(@thing.name))) %></p>
     </div>
 
 and generate the following entries in `config/locales/l10nized.yml`:
