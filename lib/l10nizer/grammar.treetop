@@ -36,7 +36,7 @@ grammar HtmlErb
   end
 
   rule inline_markup
-    "<" "/"? ("em" / "strong" / "span") [^>]* ">"
+    "<" "/"? ("em" / "strong") [^>]* ">"
   end
 
   rule word

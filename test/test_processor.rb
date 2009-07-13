@@ -89,12 +89,12 @@ class ProcessorTest < Test::Unit::TestCase
 
   context "when string contains inline markup" do
     setup do
-      html = "<p>String with a <span>span</span> and <strong>strong</strong> and <em>emphasised</em> text</p>"
+      html = "<p>String with <strong>strong</strong> and <em>emphasised</em> text</p>"
       @l10nizer = L10nizer::Processor.new(html, lambda{ "key" })
     end
 
     should "include that markup in text" do
-      expected = "String with a <span>span</span> and <strong>strong</strong> and <em>emphasised</em> text"
+      expected = "String with <strong>strong</strong> and <em>emphasised</em> text"
       assert_equal [expected], @l10nizer.l10ns.values
     end
 
@@ -102,6 +102,12 @@ class ProcessorTest < Test::Unit::TestCase
       expected = %{<p><%= t("key") %></p>}
       assert_equal expected, @l10nizer.reformed
     end
+  end
+
+  should "not consider <span> to be inline markup" do
+    html = %{foo <span>bar</span>}
+    l10nizer = L10nizer::Processor.new(html, DumbKeyGenerator.new)
+    assert_equal ["bar", "foo"], l10nizer.l10ns.values.sort
   end
 
   context "when parsing a sample document" do
