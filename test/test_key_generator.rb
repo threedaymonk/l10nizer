@@ -17,7 +17,7 @@ class KeyGeneratorTest < Test::Unit::TestCase
 
     should "truncate exceptionally long keys" do
       long  = "blah_" * 20
-      short = long[0, 40]
+      short = "blah_blah_blah_blah_blah_blah_blah_blah"
       assert_equal short, @keygen.call(long)
     end
 

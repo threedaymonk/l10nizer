@@ -32,8 +32,8 @@ module L10nizer
              gsub(/&[a-z0-9]{1,20};/, ""). # entities
              gsub(/<[^>]*>/, "").          # html
              gsub(/[^a-z0-9]+/, "_").      # non alphanumeric
-             gsub(/^_|_$/, "").            # leading/trailing _
-             slice(0, 40)
+             slice(0, 40).
+             gsub(/^_|_$/, "")             # leading/trailing _
       safe = "unknown" if safe.empty?
       safe
     end
