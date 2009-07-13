@@ -32,11 +32,15 @@ grammar HtmlErb
   end
 
   rule text
-    (optional_whitespace erb_eval / optional_whitespace word)+ <Text>
+    (optional_whitespace (erb_eval / inline_markup / word))+ <Text>
+  end
+
+  rule inline_markup
+    "<" "/"? ("em" / "strong" / "span") [^>]* ">"
   end
 
   rule word
-    [^<\s]+
+    [^<\s]+ <Word>
   end
 
   rule erb_eval

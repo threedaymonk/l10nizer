@@ -87,6 +87,23 @@ class ProcessorTest < Test::Unit::TestCase
     assert_equal html, l10nizer.reformed
   end
 
+  context "when string contains inline markup" do
+    setup do
+      html = "<p>String with a <span>span</span> and <strong>strong</strong> and <em>emphasised</em> text</p>"
+      @l10nizer = L10nizer::Processor.new(html, lambda{ "key" })
+    end
+
+    should "include that markup in text" do
+      expected = "String with a <span>span</span> and <strong>strong</strong> and <em>emphasised</em> text"
+      assert_equal [expected], @l10nizer.l10ns.values
+    end
+
+    should "use only one localisation" do
+      expected = %{<p><%= t("key") %></p>}
+      assert_equal expected, @l10nizer.reformed
+    end
+  end
+
   context "when parsing a sample document" do
     setup do
       @html     = File.read(File.join(File.dirname(__FILE__), "samples", "input.html.erb"))

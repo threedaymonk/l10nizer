@@ -14,4 +14,7 @@ module HtmlErb
 
   class Eval < Treetop::Runtime::SyntaxNode
   end
+
+  class Word < Treetop::Runtime::SyntaxNode
+  end
 end

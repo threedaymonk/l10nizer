@@ -6,6 +6,8 @@ module L10nizer
         TextNode.new(node, keygen)
       when HtmlErb::Eval
         EvalNode.new(node, keygen)
+      when HtmlErb::Word
+        WordNode.new(node)
       else
         BasicNode.new(node)
       end
@@ -27,6 +29,10 @@ module L10nizer
     end
 
     def evaluated?
+      false
+    end
+
+    def string?
       false
     end
   end
@@ -60,7 +66,7 @@ module L10nizer
 
     def vars_and_text
       @vars_and_text ||= (
-        if children.all?{ |c| c.evaluated? }
+        if children.all?{ |c| c.evaluated? } || !children.any?{ |c| c.string? }
           []
         else
           l10n = ""
@@ -90,6 +96,12 @@ module L10nizer
     end
 
     def evaluated?
+      true
+    end
+  end
+
+  class WordNode < BasicNode
+    def string?
       true
     end
   end
