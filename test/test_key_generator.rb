@@ -31,8 +31,16 @@ class KeyGeneratorTest < Test::Unit::TestCase
       assert_equal "a_thing_2", @keygen.call("A Thing")
     end
 
-    should "generate_non_empty_keys_for_punctuation" do
+    should "generate non empty keys for punctuation" do
       assert_not_equal "", @keygen.call("<>!@#%#.,")
+    end
+
+    should "skip entities in keys" do
+      assert_equal "foo_bar", @keygen.call("foo &apos; bar")
+    end
+
+    should "skip inline markup in keys" do
+      assert_equal "foo_bar", @keygen.call("foo <strong>bar</strong>")
     end
   end
 

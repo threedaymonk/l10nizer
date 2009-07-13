@@ -27,7 +27,13 @@ module L10nizer
 
     def make_safe(string)
       return nil if string.nil?
-      safe = string.downcase.gsub(/[^a-z0-9]+/, "_").gsub(/^_|_$/, "")[0, 40]
+      safe = string.
+             downcase.
+             gsub(/&[a-z0-9]{1,20};/, ""). # entities
+             gsub(/<[^>]*>/, "").          # html
+             gsub(/[^a-z0-9]+/, "_").      # non alphanumeric
+             gsub(/^_|_$/, "").            # leading/trailing _
+             slice(0, 40)
       safe = "unknown" if safe.empty?
       safe
     end
