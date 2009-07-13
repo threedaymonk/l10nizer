@@ -29,7 +29,7 @@ spec = Gem::Specification.new do |s|
 
   s.has_rdoc          = false
 
-  s.files             = %w(Rakefile) + Dir.glob("{bin,test,lib}/**/*")
+  s.files             = %w(Rakefile README.md) + Dir.glob("{bin,test,lib}/**/*")
   s.executables       = FileList["bin/**"].map { |f| File.basename(f) }
 
   s.require_paths     = ["lib"]
