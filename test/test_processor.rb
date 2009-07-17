@@ -131,4 +131,26 @@ class ProcessorTest < Test::Unit::TestCase
     end
   end
 
+  context "when $KCODE is 'UTF8'" do
+    setup do
+      @kcode = $KCODE
+      $KCODE = "UTF8"
+    end
+
+    teardown do
+      $KCODE = @kcode
+    end
+
+    should "parse multi-byte characters in strings" do
+      html = "<p>We’ve</p>"
+      l10nizer = L10nizer::Processor.new(html, DumbKeyGenerator.new)
+      assert_equal ["We’ve"], l10nizer.l10ns.values
+    end
+
+    should "not change $KCODE" do
+      l10nizer = L10nizer::Processor.new("", DumbKeyGenerator.new)
+      ignore = l10nizer.l10ns.values
+      assert_equal "UTF8", $KCODE
+    end
+  end
 end
