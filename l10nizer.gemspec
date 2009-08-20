@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{l10nizer}
-  s.version = "0.0.8"
+  s.version = "0.0.9"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Paul Battley"]
-  s.date = %q{2009-08-04}
+  s.date = %q{2009-08-20}
   s.default_executable = %q{l10nizer}
   s.email = %q{pbattley@gmail.com}
   s.executables = ["l10nizer"]
