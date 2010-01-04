@@ -8,11 +8,11 @@ grammar HtmlErb
   end
 
   rule javascript
-    "<script" ([^<] / "<" [^/] / "</" [^s] / "</s" [^c] / "</sc" [^r] / "</scr" [^i] / "</scri" [^p] / "</scrip" [^t] / "</script" [^>"])* "</script>"
+    "<script" ([^<] / "<" !"/script")* "</script>"
   end
 
   rule style
-    "<style" ([^<] / "<" [^/] / "</" [^s] / "</s" [^t] / "</st" [^y] / "</sty" [^l] / "</styl" [^e] / "</style" [^>"])* "</style>"
+    "<style" ([^<] / "<" !"/style")* "</style>"
   end
 
   rule erb_control
