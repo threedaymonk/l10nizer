@@ -73,7 +73,7 @@ module L10nizer
           vars = []
           children.each do |e|
             if e.evaluated?
-              l10n << "{{#{variable_name(vars.length)}}}"
+              l10n << "%{#{variable_name(vars.length)}}"
               vars << e.to_s
             else
               l10n << e.to_s

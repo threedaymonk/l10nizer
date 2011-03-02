@@ -41,7 +41,7 @@ class ProcessorTest < Test::Unit::TestCase
     end
 
     should "extract l10n strings" do
-      expected = {"string_a_with_b" => "String {{a}} with {{b}}"}
+      expected = {"string_a_with_b" => "String %{a} with %{b}"}
       assert_equal expected, @l10nizer.l10ns
     end
   end
@@ -58,7 +58,7 @@ class ProcessorTest < Test::Unit::TestCase
     end
 
     should "extract l10n strings with placeholder variables" do
-      expected = {"string_a_with_b" => "String {{a}} with {{b}}", "another_a" => "Another {{a}}"}
+      expected = {"string_a_with_b" => "String %{a} with %{b}", "another_a" => "Another %{a}"}
       assert_equal expected, @l10nizer.l10ns
     end
   end
