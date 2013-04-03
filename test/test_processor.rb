@@ -97,7 +97,7 @@ class ProcessorTest < Test::Unit::TestCase
   context "when string contains inline markup" do
     setup do
       html = "<p>String with <strong>strong</strong> and <em>emphasised</em> text</p>"
-      @l10nizer = L10nizer::Processor.new(html, lambda{ "key" })
+      @l10nizer = L10nizer::Processor.new(html, lambda{ |*a| "key" })
     end
 
     should "include that markup in text" do
