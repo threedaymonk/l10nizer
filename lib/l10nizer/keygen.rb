@@ -10,7 +10,12 @@ module L10nizer
       provisional = [make_safe(namespace), make_safe(string)].compact * "."
 
       until try(provisional, string)
-        provisional.sub!(/(?:_\d+)?$/){ |m| "_" + m.to_i.succ.to_s }
+        match = provisional.match(/_(\d+)$/)
+        if match
+          provisional.sub! /\d+$/, match[1].to_i.succ.to_s
+        else
+          provisional << "_1"
+        end
       end
 
       return provisional
