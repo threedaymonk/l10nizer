@@ -19,7 +19,7 @@ l10nizer will change it to:
 
     <div class="thing">
       <h1><%= t("things.some_heading") %></h1>
-      <p><%= t("things.this_thing_is_called_a", :a => (h(@thing.name))) %></p>
+      <p><%= t("things.this_thing_is_called_a", a: (h(@thing.name))) %></p>
     </div>
 
 and generate the following entries in `config/locales/l10nized.yml`:
@@ -48,3 +48,4 @@ Limitations
 * L10nizer takes no position on HTML entities or escaping. You __will__ need to review the changes it makes.
 * Similarly, pluralisation is outside the scope of this application and will require attention.
 * Strings that should be single entities but which contain HTML will be broken into multiple localisation strings.
+* Requires Ruby 1.9 (use 0.0.10 or earlier for Ruby 1.8)

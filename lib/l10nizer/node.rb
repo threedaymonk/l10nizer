@@ -49,7 +49,7 @@ module L10nizer
 
       params = ['"' + key + '"']
       vars.each_with_index do |v, i|
-        params << %{:#{variable_name(i)} => (#{v})}
+        params << %{#{variable_name(i)}: (#{v})}
       end
 
       %{<%= t(#{params * ", "}) %>}
