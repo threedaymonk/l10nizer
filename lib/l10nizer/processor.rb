@@ -17,13 +17,11 @@ module L10nizer
     end
 
     def processed
-      unless @processed
-        kcode = $KCODE
-        $KCODE = "n"
-        @processed = HtmlErbParser.new.parse(@html).elements.map{ |e| NodeWrapperFactory.wrap(e, @keygen) }
-        $KCODE = kcode
-      end
-      @processed
+      @processed ||=
+        HtmlErbParser.new.
+        parse(@html).
+        elements.
+        map{ |e| NodeWrapperFactory.wrap(e, @keygen) }
     end
   end
 end
