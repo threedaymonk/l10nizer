@@ -4,20 +4,29 @@ require 'yaml'
 require 'fileutils'
 
 Dir.chdir(ARGV.first) if ARGV.first
-templates = Dir['app/views/**/*.html.erb']
+templates = Dir['app/views/**/*.html.{erb,haml}']
 raise "Can't find any templates in app/views." unless templates.any?
 
 keygen = L10nizer::KeyGenerator.new
 l10ns = {}
 
+def read(path)
+  File.read(path)
+end
+
+def write(path, content)
+  File.open(path, 'w') do |f|
+    f << content
+  end
+end
+
 templates.each do |path|
+  $stderr.puts path
   keygen.namespace = path.split('/')[2]
-  source = File.read(path)
+  source = read(path)
   l10nizer = L10nizer::Processor.new(source, keygen)
   l10ns.merge!(l10nizer.l10ns)
-  File.open(path, 'w') do |f|
-    f << l10nizer.reformed
-  end
+  write path, l10nizer.reformed
 end
 
 l10ns = l10ns.inject({}){ |hash, (key, value)|
