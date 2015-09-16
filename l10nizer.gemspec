@@ -17,7 +17,6 @@ spec = Gem::Specification.new do |s|
   s.add_runtime_dependency "treetop",  ">= 1.2.6"
   s.add_runtime_dependency "polyglot", ">= 0.2.5"
 
-  s.add_development_dependency "shoulda"
   s.add_development_dependency "rake"
-  s.add_development_dependency "test-unit"
+  s.add_development_dependency "rspec", "~> 3"
 end

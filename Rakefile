@@ -1,16 +1,16 @@
-require "rake/testtask"
+require "rspec/core/rake_task"
 
-Rake::TestTask.new("test") do |t|
-  t.libs   << "test"
-  t.pattern = "test/**/test_*.rb"
-  t.verbose = true
+desc "Run the specs."
+RSpec::Core::RakeTask.new do |t|
+  t.pattern = "spec/**/*_spec.rb"
+  t.verbose = false
 end
 
-task :default => :test
+task default: :spec
 
-require "rake/testtask"
-Rake::TestTask.new do |t|
-  t.libs << "test"
-  t.test_files = FileList["test/**/*_test.rb"]
-  t.verbose = true
+if Gem.loaded_specs.key?('rubocop')
+  require 'rubocop/rake_task'
+  RuboCop::RakeTask.new
+
+  task default: :rubocop
 end
