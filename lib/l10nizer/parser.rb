@@ -1,6 +1,6 @@
-require "treetop"
-require "polyglot"
-require "l10nizer/grammar"
+require 'treetop'
+require 'polyglot'
+require 'l10nizer/grammar'
 
 module HtmlErb
   class Document < Treetop::Runtime::SyntaxNode
@@ -8,7 +8,7 @@ module HtmlErb
 
   class Text < Treetop::Runtime::SyntaxNode
     def children
-      elements.map{ |e| e.elements }.flatten
+      elements.flat_map(&:elements)
     end
   end
 

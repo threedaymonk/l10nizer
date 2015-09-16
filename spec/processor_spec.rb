@@ -99,7 +99,7 @@ RSpec.describe L10nizer::Processor do
 
   context 'a string containing inline markup' do
     let(:html) { '<p>String with <strong>strong</strong> and <em>emphasised</em> text</p>' }
-    let(:key_generator) { ->(*a) { 'key' } }
+    let(:key_generator) { ->(*) { 'key' } }
 
     it 'includes that markup in text' do
       expect(subject.l10ns.values).

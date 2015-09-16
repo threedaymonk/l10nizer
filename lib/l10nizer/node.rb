@@ -1,6 +1,6 @@
 module L10nizer
   class NodeWrapperFactory
-    def self.wrap(node, keygen=nil)
+    def self.wrap(node, keygen = nil)
       case node
       when HtmlErb::Text
         TextNode.new(node, keygen)
@@ -15,7 +15,7 @@ module L10nizer
   end
 
   class BasicNode
-    def initialize(node, keygen=nil)
+    def initialize(node, keygen = nil)
       @node   = node
       @keygen = keygen
     end
@@ -40,7 +40,7 @@ module L10nizer
   class TextNode < BasicNode
     def l10n
       _, text = vars_and_text
-      text ? {key => text} : {}
+      text ? { key => text } : {}
     end
 
     def to_s
@@ -52,24 +52,26 @@ module L10nizer
         params << %{#{variable_name(i)}: (#{v})}
       end
 
-      %{<%= t(#{params * ", "}) %>}
+      %{<%= t(#{params * ', '}) %>}
     end
 
   private
+
     def children
-      @node.children.map{ |e| NodeWrapperFactory.wrap(e) }
+      @node.children.map { |e| NodeWrapperFactory.wrap(e) }
     end
 
     def variable_name(index)
-      ("a" .. "z").to_a[index]
+      ('a'..'z').to_a[index]
     end
 
+    # rubocop:disable MethodLength
     def vars_and_text
       @vars_and_text ||= (
-        if children.all?{ |c| c.evaluated? } || !children.any?{ |c| c.string? }
+        if children.all?(&:evaluated?) || children.none?(&:string?)
           []
         else
-          l10n = ""
+          l10n = ''
           vars = []
           children.each do |e|
             if e.evaluated?
@@ -83,6 +85,7 @@ module L10nizer
         end
       )
     end
+    # rubocop:enable MethodLength
 
     def key
       _, text = vars_and_text
