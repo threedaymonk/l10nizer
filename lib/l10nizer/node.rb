@@ -37,7 +37,7 @@ module L10nizer
         params << %{#{variable_name(i)}: (#{v})}
       end
 
-      %{<%= t(#{params * ', '}) %>}
+      @wrapper.interpolate(%{t(#{params * ', '})})
     end
 
   private

@@ -21,5 +21,11 @@ module HtmlErb
   class Word < Treetop::Runtime::SyntaxNode
   end
 
+  class Emitter
+    def interpolate(s)
+      %{<%= #{s} %>}
+    end
+  end
+
   Parser = HtmlErbParser
 end

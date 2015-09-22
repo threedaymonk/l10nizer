@@ -6,10 +6,12 @@ module L10nizer
     extend Forwardable
 
     def_delegator :@keygen, :call, :generate_key
+    def_delegators :@emitter, :interpolate
 
     def initialize(context, keygen)
       @context = context
       @keygen = keygen
+      @emitter = context::Emitter.new
     end
 
     def wrap(node)
