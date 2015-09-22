@@ -79,10 +79,6 @@ module L10nizer
   end
 
   class EvalNode < BasicNode
-    def to_s
-      super[/\A<%=\s*(.*?)\s*%>\Z/, 1]
-    end
-
     def evaluated?
       true
     end

@@ -13,6 +13,9 @@ module HtmlErb
   end
 
   class Eval < Treetop::Runtime::SyntaxNode
+    def text_value
+      super[/\A<%=\s*(.*?)\s*%>\Z/, 1]
+    end
   end
 
   class Word < Treetop::Runtime::SyntaxNode
