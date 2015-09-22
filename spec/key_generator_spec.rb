@@ -3,7 +3,7 @@ require 'l10nizer/keygen'
 RSpec.describe L10nizer::KeyGenerator do
   context 'without namespacing' do
     it 'generates keys based on string' do
-      expect(subject.call('Foo bar  baz  {{a}}')).to eq('foo_bar_baz_a')
+      expect(subject.call('Foo bar  baz  %{a}')).to eq('foo_bar_baz_a')
     end
 
     it 'truncates exceptionally long keys' do

@@ -26,7 +26,7 @@ and generate the following entries in `config/locales/l10nized.yml`:
 
     things:
       some_heading: Some heading
-      this_thing_is_called_a: This thing is called {{a}}
+      this_thing_is_called_a: This thing is called %{a}
 
 You can then use `l10nized.yml` as a basis for the localisation file for your current locale, e.g. `en_GB.yml`.
 
