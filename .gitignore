@@ -3,3 +3,4 @@ pkg
 rdoc
 Gemfile.lock
 *.gem
+.ruby-version
