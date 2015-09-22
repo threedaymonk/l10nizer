@@ -1,0 +1,22 @@
+%li.item.underway{:id => "action_#{h thing.whatsit.id}"}
+  .wrap
+    .placeholder
+      - if thing.whatsit.identity?
+        - if thing.whatsit.identity.processed?
+          = image_tag thing.whatsit.identity.url(:medium)
+        - else
+          = t("general.processing_image")
+    %h3
+      - link_to(thing) do
+        %span= h thing.whatsit.name
+        = h thing.short_address
+  .details
+    .format
+      %h4.obfuscate Skills
+      %ul.skills
+        - thing.whatsit.skills.each do |skill|
+          %li.skill
+            = skill_icon(skill, :small)
+        %li.engagement
+          = engagement_icon(4, :small)
+      = h truncate(thing.whatsit.short_description, :length => 130)

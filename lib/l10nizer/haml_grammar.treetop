@@ -1,0 +1,61 @@
+grammar Haml
+  rule document
+    (whitespace / element / control / eval / text)* <Document>
+  end
+
+  rule element
+    (tag / class / id) (class / id)* attributes? " "* <Element>
+  end
+
+  rule control
+    "-" [^\n]+ <Control>
+  end
+
+  rule tag
+    "%" [a-z0-9]+ <Tag>
+  end
+
+  rule class
+    "." [a-zA-Z0-9\-_]+ <CSSClass>
+  end
+
+  rule id
+    "#" [a-zA-Z0-9\-_]+ <ElementID>
+  end
+
+  rule eval
+    "=" [^\n]+ <Eval>
+  end
+
+  rule attributes
+    braced
+  end
+
+  rule open_brace
+    "{"
+  end
+
+  rule close_brace
+    "}"
+  end
+
+  rule braced
+    open_brace ([^{}] / braced)* close_brace
+  end
+
+  rule whitespace
+    [\s]+
+  end
+
+  rule firstword
+    [^\-%\.#=\s]+ <Word>
+  end
+
+  rule word
+    [\S]+
+  end
+
+  rule text
+    firstword ([ ]+ word)* <Text>
+  end
+end

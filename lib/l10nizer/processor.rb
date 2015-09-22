@@ -1,4 +1,5 @@
 require 'l10nizer/html_erb_parser'
+require 'l10nizer/haml_parser'
 require 'l10nizer/node_wrapper'
 
 module L10nizer
