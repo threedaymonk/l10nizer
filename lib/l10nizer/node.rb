@@ -1,23 +1,8 @@
 module L10nizer
-  class NodeWrapperFactory
-    def self.wrap(node, keygen = nil)
-      case node
-      when HtmlErb::Text
-        TextNode.new(node, keygen)
-      when HtmlErb::Eval
-        EvalNode.new(node, keygen)
-      when HtmlErb::Word
-        WordNode.new(node)
-      else
-        BasicNode.new(node)
-      end
-    end
-  end
-
   class BasicNode
-    def initialize(node, keygen = nil)
-      @node   = node
-      @keygen = keygen
+    def initialize(wrapper, node)
+      @wrapper = wrapper
+      @node = node
     end
 
     def l10n
@@ -58,7 +43,7 @@ module L10nizer
   private
 
     def children
-      @node.children.map { |e| NodeWrapperFactory.wrap(e) }
+      @node.children.map { |e| @wrapper.wrap(e) }
     end
 
     def variable_name(index)
@@ -89,7 +74,7 @@ module L10nizer
 
     def key
       _, text = vars_and_text
-      @key ||= @keygen.call(text)
+      @key ||= @wrapper.generate_key(text)
     end
   end
 

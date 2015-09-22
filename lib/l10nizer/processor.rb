@@ -1,11 +1,12 @@
-require 'l10nizer/parser'
-require 'l10nizer/node'
+require 'l10nizer/html_erb_parser'
+require 'l10nizer/node_wrapper'
 
 module L10nizer
   class Processor
-    def initialize(html, keygen)
+    def initialize(html, keygen, context = HtmlErb)
       @html = html
       @keygen = keygen
+      @context = context
     end
 
     def l10ns
@@ -17,11 +18,12 @@ module L10nizer
     end
 
     def processed
+      @wrapper = NodeWrapper.new(@context, @keygen)
       @processed ||=
-        HtmlErbParser.new.
+        @context::Parser.new.
         parse(@html).
         elements.
-        map { |e| NodeWrapperFactory.wrap(e, @keygen) }
+        map { |e| @wrapper.wrap(e) }
     end
   end
 end
