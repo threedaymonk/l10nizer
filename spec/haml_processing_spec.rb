@@ -63,6 +63,18 @@ RSpec.describe L10nizer::Processor do
     end
   end
 
+  context 'simple interpolation via #{}' do
+    let(:haml) { '%p #{x}' }
+
+    it 'is not localised' do
+      pending
+      # This should be left as-is, but the space is being removed, leading to
+      # invalid '%p#{x}'. I'm not sure how to retain it without breaking
+      # the '%p= x' case, however.
+      expect(subject.reformed).to eq(haml)
+    end
+  end
+
   context 'a sample document' do
     let(:haml) {
       File.read(File.expand_path('../samples/input.html.haml', __FILE__))
