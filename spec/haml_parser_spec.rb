@@ -38,6 +38,17 @@ RSpec.describe L10nizer::HamlParser do
     end
   end
 
+  context 'with a tag with "terser" attributes' do
+    let(:source) { '%html(xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en")' }
+    it { is_expected.to have_attributes(length: 1) }
+
+    context 'the first node' do
+      subject { super().fetch(0) }
+      it { is_expected.to be_kind_of(L10nizer::Haml::Element) }
+      it { is_expected.to have_attributes(text_value: source) }
+    end
+  end
+
   context 'with a tag with evaluated content' do
     let(:source) { '%div= 1 + 1' }
     it { is_expected.to have_attributes(length: 2) }

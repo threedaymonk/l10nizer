@@ -29,11 +29,15 @@ module L10nizer
     end
 
     rule attributes
-      braced
+      braced / parenthesized
     end
 
     rule braced
       "{" ([^{}] / braced)* "}"
+    end
+
+    rule parenthesized
+      "(" ([^()] / parenthesized)* ")"
     end
 
     rule interpolation
