@@ -36,20 +36,20 @@ module L10nizer
       "{" ([^{}] / braced)* "}"
     end
 
+    rule interpolation
+      "#" braced <Interpolation>
+    end
+
     rule whitespace
       [\s]+
     end
 
-    rule firstword
-      [^\-%\.#=\s] [\S]+ <Word>
-    end
-
     rule word
-      [\S]+ <Word>
+      (("#" !"{") / [^#\n])+ <Word>
     end
 
     rule text
-      firstword ([ ]+ word)* <Text>
+      (interpolation / word)+ <Text>
     end
   end
 end

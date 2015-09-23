@@ -5,7 +5,7 @@ module L10nizer
 
     class Element < Treetop::Runtime::SyntaxNode
       def text_value
-        super.sub(/ $/, '')
+        super().sub(/ $/, '')
       end
     end
 
@@ -16,6 +16,12 @@ module L10nizer
     end
 
     class Eval < Treetop::Runtime::SyntaxNode
+    end
+
+    class Interpolation < Eval
+      def text_value
+        super()[/\A\#\{\s*(.*?)\s*\}\z/, 1]
+      end
     end
 
     class Word < Treetop::Runtime::SyntaxNode
