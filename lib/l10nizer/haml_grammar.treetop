@@ -1,15 +1,23 @@
 module L10nizer
   grammar Haml
     rule document
-      (whitespace / element / control / eval / text)* <Document>
+      (whitespace / element / control / eval / comment / text)* <Document>
     end
 
     rule element
       (tag / class / id) (class / id)* attributes? " "* <Element>
     end
 
+    rule comment
+      "/" rest_of_line
+    end
+
     rule control
-      "-" [^\n]+
+      "-" rest_of_line
+    end
+
+    rule rest_of_line
+      [^\n]+
     end
 
     rule tag

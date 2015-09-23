@@ -43,6 +43,14 @@ RSpec.describe L10nizer::Processor do
     end
   end
 
+  context 'a comment' do
+    let(:haml) { '/ ignore me' }
+
+    it 'is not localised' do
+      expect(subject.reformed).to eq(haml)
+    end
+  end
+
   context 'interpolation via #{}' do
     let(:haml) { '%p #{x}, #{y}' }
 
