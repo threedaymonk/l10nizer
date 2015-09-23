@@ -1,7 +1,13 @@
 module L10nizer
   grammar Haml
     rule document
-      (whitespace / element / control / eval / comment / text)* <Document>
+      (
+        whitespace / directive / element / control / eval / comment / text
+      )* <Document>
+    end
+
+    rule directive
+      ":" whitespace? (rest_of_line "\n")+ "\n"
     end
 
     rule element

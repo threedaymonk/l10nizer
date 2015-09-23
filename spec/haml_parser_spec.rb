@@ -93,6 +93,16 @@ RSpec.describe L10nizer::HamlParser do
     end
   end
 
+  context 'directive' do
+    let(:source) { ':javascript\nblah\nblah\n\n' }
+    it { is_expected.to have_attributes(length: 1) }
+
+    context 'the first node' do
+      subject { super().fetch(0) }
+      it { is_expected.to have_attributes(text_value: source) }
+    end
+  end
+
   context 'text content' do
     let(:source) { 'text goes here' }
     it { is_expected.to have_attributes(length: 1) }
