@@ -31,16 +31,8 @@ grammar Haml
     braced
   end
 
-  rule open_brace
-    "{"
-  end
-
-  rule close_brace
-    "}"
-  end
-
   rule braced
-    open_brace ([^{}] / braced)* close_brace
+    "{" ([^{}] / braced)* "}"
   end
 
   rule whitespace
