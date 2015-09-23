@@ -8,7 +8,7 @@ RSpec.describe L10nizer::Processor do
   }
 
   subject {
-    described_class.new(html, key_generator)
+    described_class.new(html, key_generator, L10nizer::HtmlErb)
   }
 
   context 'when finding text' do
