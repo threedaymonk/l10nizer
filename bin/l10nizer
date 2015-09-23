@@ -28,5 +28,5 @@ l10ns = l10ns.inject({}){ |hash, (key, value)|
 
 FileUtils.mkdir_p('config/locales')
 File.open('config/locales/l10nized.yml', 'w') do |f|
-  f << l10ns.to_yaml
+  f << {'en' => l10ns}.to_yaml
 end
