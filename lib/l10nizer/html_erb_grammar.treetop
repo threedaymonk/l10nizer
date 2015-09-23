@@ -1,53 +1,55 @@
-grammar HtmlErb
-  rule document
-    (html_comment / javascript / style / erb_control / whitespace / text / tag)* <Document>
-  end
+module L10nizer
+  grammar HtmlErb
+    rule document
+      (html_comment / javascript / style / erb_control / whitespace / text / tag)* <Document>
+    end
 
-  rule html_comment
-    "<!--" ([^\-] / "-" [^\-] / "--" [^>])* "-->"
-  end
+    rule html_comment
+      "<!--" ([^\-] / "-" [^\-] / "--" [^>])* "-->"
+    end
 
-  rule javascript
-    "<script" ([^<] / "<" !"/script")* "</script>"
-  end
+    rule javascript
+      "<script" ([^<] / "<" !"/script")* "</script>"
+    end
 
-  rule style
-    "<style" ([^<] / "<" !"/style")* "</style>"
-  end
+    rule style
+      "<style" ([^<] / "<" !"/style")* "</style>"
+    end
 
-  rule erb_control
-    "<%" [^=] ruby_code "%>"
-  end
+    rule erb_control
+      "<%" [^=] ruby_code "%>"
+    end
 
-  rule tag
-    "<" (erb_control / erb_eval / [^>])+ ">"
-  end
+    rule tag
+      "<" (erb_control / erb_eval / [^>])+ ">"
+    end
 
-  rule whitespace
-    [\s]+
-  end
+    rule whitespace
+      [\s]+
+    end
 
-  rule optional_whitespace
-    [\s]*
-  end
+    rule optional_whitespace
+      [\s]*
+    end
 
-  rule text
-    (optional_whitespace (erb_eval / inline_markup / word))+ <Text>
-  end
+    rule text
+      (optional_whitespace (erb_eval / inline_markup / word))+ <Text>
+    end
 
-  rule inline_markup
-    "<" "/"? ("em" / "strong") [^>]* ">"
-  end
+    rule inline_markup
+      "<" "/"? ("em" / "strong") [^>]* ">"
+    end
 
-  rule word
-    [^<\s]+ <Word>
-  end
+    rule word
+      [^<\s]+ <Word>
+    end
 
-  rule erb_eval
-    "<%=" ruby_code "%>" <Eval>
-  end
+    rule erb_eval
+      "<%=" ruby_code "%>" <Eval>
+    end
 
-  rule ruby_code
-    (("%" [^>]) / [^%])+
+    rule ruby_code
+      (("%" [^>]) / [^%])+
+    end
   end
 end

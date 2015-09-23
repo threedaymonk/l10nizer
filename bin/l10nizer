@@ -25,7 +25,7 @@ templates.each do |path|
   begin
     keygen.namespace = path.split('/')[2]
     source = read(path)
-    context = path.match(/\.haml\z/) ? Haml : HtmlErb
+    context = path.match(/\.haml\z/) ? L10nizer::Haml : L10nizer::HtmlErb
     l10nizer = L10nizer::Processor.new(source, keygen, context)
     l10ns.merge!(l10nizer.l10ns)
     write path, l10nizer.reformed

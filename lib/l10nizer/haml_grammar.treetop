@@ -1,53 +1,55 @@
-grammar Haml
-  rule document
-    (whitespace / element / control / eval / text)* <Document>
-  end
+module L10nizer
+  grammar Haml
+    rule document
+      (whitespace / element / control / eval / text)* <Document>
+    end
 
-  rule element
-    (tag / class / id) (class / id)* attributes? " "* <Element>
-  end
+    rule element
+      (tag / class / id) (class / id)* attributes? " "* <Element>
+    end
 
-  rule control
-    "-" [^\n]+
-  end
+    rule control
+      "-" [^\n]+
+    end
 
-  rule tag
-    "%" [a-z0-9]+
-  end
+    rule tag
+      "%" [a-z0-9]+
+    end
 
-  rule class
-    "." [a-zA-Z0-9\-_]+
-  end
+    rule class
+      "." [a-zA-Z0-9\-_]+
+    end
 
-  rule id
-    "#" [a-zA-Z0-9\-_]+
-  end
+    rule id
+      "#" [a-zA-Z0-9\-_]+
+    end
 
-  rule eval
-    "=" [^\n]+ <Eval>
-  end
+    rule eval
+      "=" [^\n]+ <Eval>
+    end
 
-  rule attributes
-    braced
-  end
+    rule attributes
+      braced
+    end
 
-  rule braced
-    "{" ([^{}] / braced)* "}"
-  end
+    rule braced
+      "{" ([^{}] / braced)* "}"
+    end
 
-  rule whitespace
-    [\s]+
-  end
+    rule whitespace
+      [\s]+
+    end
 
-  rule firstword
-    [^\-%\.#=\s] [\S]+ <Word>
-  end
+    rule firstword
+      [^\-%\.#=\s] [\S]+ <Word>
+    end
 
-  rule word
-    [\S]+ <Word>
-  end
+    rule word
+      [\S]+ <Word>
+    end
 
-  rule text
-    firstword ([ ]+ word)* <Text>
+    rule text
+      firstword ([ ]+ word)* <Text>
+    end
   end
 end

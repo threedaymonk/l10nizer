@@ -8,7 +8,7 @@ RSpec.describe L10nizer::Processor do
   }
 
   subject {
-    described_class.new(haml, key_generator, Haml)
+    described_class.new(haml, key_generator, L10nizer::Haml)
   }
 
   context 'when finding text' do

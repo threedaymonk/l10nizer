@@ -21,7 +21,7 @@ module L10nizer
     def processed
       @wrapper = NodeWrapper.new(@context, @keygen)
       @processed ||=
-        @context::Parser.new.
+        @context.parser.new.
         parse(@html).
         elements.
         map { |e| @wrapper.wrap(e) }
