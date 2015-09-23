@@ -8,19 +8,19 @@ grammar Haml
   end
 
   rule control
-    "-" [^\n]+ <Control>
+    "-" [^\n]+
   end
 
   rule tag
-    "%" [a-z0-9]+ <Tag>
+    "%" [a-z0-9]+
   end
 
   rule class
-    "." [a-zA-Z0-9\-_]+ <CSSClass>
+    "." [a-zA-Z0-9\-_]+
   end
 
   rule id
-    "#" [a-zA-Z0-9\-_]+ <ElementID>
+    "#" [a-zA-Z0-9\-_]+
   end
 
   rule eval

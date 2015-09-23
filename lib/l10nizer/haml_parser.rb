@@ -12,21 +12,6 @@ module Haml
     end
   end
 
-  class Control < Treetop::Runtime::SyntaxNode
-  end
-
-  class Tag < Treetop::Runtime::SyntaxNode
-  end
-
-  class CSSClass < Treetop::Runtime::SyntaxNode
-  end
-
-  class ElementID < Treetop::Runtime::SyntaxNode
-  end
-
-  class Attributes < Treetop::Runtime::SyntaxNode
-  end
-
   class Text < Treetop::Runtime::SyntaxNode
     def children
       elements
