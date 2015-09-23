@@ -40,11 +40,11 @@ grammar Haml
   end
 
   rule firstword
-    [^\-%\.#=\s]+ <Word>
+    [^\-%\.#=\s] [\S]+ <Word>
   end
 
   rule word
-    [\S]+
+    [\S]+ <Word>
   end
 
   rule text
