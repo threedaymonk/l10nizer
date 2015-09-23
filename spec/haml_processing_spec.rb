@@ -23,6 +23,18 @@ RSpec.describe L10nizer::Processor do
     end
   end
 
+  context 'a tag with text' do
+    let(:haml) { '%p just some text' }
+
+    it 'passes key to t()' do
+      expect(subject.reformed).to eq(%{%p= t("just_some_text")})
+    end
+
+    it 'extracts l10n strings' do
+      expect(subject.l10ns).to eq('just_some_text' => 'just some text')
+    end
+  end
+
   context 'an inline eval on its own' do
     let(:haml) { '%p= 27' }
 
