@@ -47,7 +47,7 @@ module L10nizer
       vars, _ = vars_and_text
       return super unless vars
 
-      params = ['"' + key + '"']
+      params = ['".' + key.split('.').last + '"']
       vars.each_with_index do |v, i|
         params << %{#{variable_name(i)}: (#{v})}
       end

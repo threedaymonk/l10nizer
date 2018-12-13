@@ -38,8 +38,8 @@ module L10nizer
              downcase.
              gsub(/&[a-z0-9]{1,20};/, ''). # entities
              gsub(/<[^>]*>/, '').          # html
-             gsub(/[^a-z0-9]+/, '_').      # non alphanumeric
-             slice(0, 40).
+             gsub(/[^a-z0-9.]+/, '_').     # non alphanumeric
+             slice(0, 40).                 # limit length
              gsub(/^_|_$/, '')             # leading/trailing _
       safe = 'unknown' if safe.empty?
       safe

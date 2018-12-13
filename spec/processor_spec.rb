@@ -15,7 +15,7 @@ RSpec.describe L10nizer::Processor do
     let(:html) { 'just some text' }
 
     it 'passes key to t()' do
-      expect(subject.reformed).to eq(%{<%= t("just_some_text") %>})
+      expect(subject.reformed).to eq(%{<%= t(".just_some_text") %>})
     end
 
     it 'extracts l10n strings' do
@@ -27,7 +27,7 @@ RSpec.describe L10nizer::Processor do
     let(:html) { 'String <%= 27 %> with <%= 42 %>' }
 
     it 'passes values to t()' do
-      expect(subject.reformed).to eq(%{<%= t("string_a_with_b", a: (27), b: (42)) %>})
+      expect(subject.reformed).to eq(%{<%= t(".string_a_with_b", a: (27), b: (42)) %>})
     end
 
     it 'extracts l10n strings' do
@@ -40,7 +40,7 @@ RSpec.describe L10nizer::Processor do
 
     it 'passes values to t() reusing placeholder variables' do
       expect(subject.reformed).
-        to eq(%{<p><%= t("string_a_with_b", a: (27), b: (42)) %></p><p><%= t("another_a", a: ("x")) %></p>})
+        to eq(%{<p><%= t(".string_a_with_b", a: (27), b: (42)) %></p><p><%= t(".another_a", a: ("x")) %></p>})
     end
 
     it 'extracts l10n strings with placeholder variables' do
@@ -107,7 +107,7 @@ RSpec.describe L10nizer::Processor do
     end
 
     it 'uses only one localisation' do
-      expect(subject.reformed).to eq(%{<p><%= t("key") %></p>})
+      expect(subject.reformed).to eq(%{<p><%= t(".key") %></p>})
     end
   end
 
