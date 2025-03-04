@@ -7,21 +7,21 @@ module L10nizer
     end
 
     def call(string)
-      provisional = [make_safe(namespace), make_safe(string)].compact * '.'
+      provisional = [make_safe(namespace), make_safe(string)].compact * "."
 
       until distinct?(provisional, string)
         match = provisional.match(/_(\d+)$/)
         if match
           provisional = provisional.sub(/\d+$/, match[1].to_i.succ.to_s)
         else
-          provisional += '_1'
+          provisional += "_1"
         end
       end
 
       provisional
     end
 
-  private
+    private
 
     def distinct?(key, string)
       if [nil, string].include?(@seen[key])
@@ -34,14 +34,14 @@ module L10nizer
 
     def make_safe(string)
       return nil if string.nil?
-      safe = string.
-             downcase.
-             gsub(/&[a-z0-9]{1,20};/, ''). # entities
-             gsub(/<[^>]*>/, '').          # html
-             gsub(/[^a-z0-9.]+/, '_').     # non alphanumeric
-             slice(0, 40).                 # limit length
-             gsub(/^_|_$/, '')             # leading/trailing _
-      safe = 'unknown' if safe.empty?
+      safe = string
+        .downcase
+        .gsub(/&[a-z0-9]{1,20};/, "") # entities
+        .gsub(/<[^>]*>/, "")          # html
+        .gsub(/[^a-z0-9.]+/, "_")     # non alphanumeric
+        .slice(0, 40)                 # limit length
+        .gsub(/^_|_$/, "")            # leading/trailing _
+      safe = "unknown" if safe.empty?
       safe
     end
   end

@@ -1,5 +1,5 @@
-require 'l10nizer/parser'
-require 'l10nizer/node'
+require "l10nizer/parser"
+require "l10nizer/node"
 
 module L10nizer
   class Processor
@@ -18,10 +18,10 @@ module L10nizer
 
     def processed
       @processed ||=
-        HtmlErbParser.new.
-        parse(@html).
-        elements.
-        map { |e| NodeWrapperFactory.wrap(e, @keygen) }
+        HtmlErbParser.new
+          .parse(@html)
+          .elements
+          .map { |e| NodeWrapperFactory.wrap(e, @keygen) }
     end
   end
 end

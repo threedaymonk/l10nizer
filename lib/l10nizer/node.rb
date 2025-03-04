@@ -16,7 +16,7 @@ module L10nizer
 
   class BasicNode
     def initialize(node, keygen = nil)
-      @node   = node
+      @node = node
       @keygen = keygen
     end
 
@@ -40,52 +40,50 @@ module L10nizer
   class TextNode < BasicNode
     def l10n
       _, text = vars_and_text
-      text ? { key => text } : {}
+      text ? {key => text} : {}
     end
 
     def to_s
       vars, _ = vars_and_text
       return super unless vars
 
-      params = ['".' + key.split('.').last + '"']
+      params = ['".' + key.split(".").last + '"']
       vars.each_with_index do |v, i|
         params << %{#{variable_name(i)}: (#{v})}
       end
 
-      %{<%= t(#{params * ', '}) %>}
+      %{<%= t(#{params * ", "}) %>}
     end
 
-  private
+    private
 
     def children
       @node.children.map { |e| NodeWrapperFactory.wrap(e) }
     end
 
     def variable_name(index)
-      ('a'..'z').to_a[index]
+      ("a".."z").to_a[index]
     end
 
-    # rubocop:disable MethodLength
+    # rubocop:disable Metrics/MethodLength
     def vars_and_text
-      @vars_and_text ||= (
-        if children.all?(&:evaluated?) || children.none?(&:string?)
-          []
-        else
-          l10n = ''
-          vars = []
-          children.each do |e|
-            if e.evaluated?
-              l10n << "%{#{variable_name(vars.length)}}"
-              vars << e.to_s
-            else
-              l10n << e.to_s
-            end
+      @vars_and_text ||= if children.all?(&:evaluated?) || children.none?(&:string?)
+        []
+      else
+        l10n = ""
+        vars = []
+        children.each do |e|
+          if e.evaluated?
+            l10n << "%{#{variable_name(vars.length)}}"
+            vars << e.to_s
+          else
+            l10n << e.to_s
           end
-          [vars, l10n]
         end
-      )
+        [vars, l10n]
+      end
     end
-    # rubocop:enable MethodLength
+    # rubocop:enable Metrics/MethodLength
 
     def key
       _, text = vars_and_text

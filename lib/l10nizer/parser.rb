@@ -1,6 +1,6 @@
-require 'treetop'
-require 'polyglot'
-require 'l10nizer/grammar'
+require "treetop"
+require "polyglot"
+require "l10nizer/grammar"
 
 module HtmlErb
   class Document < Treetop::Runtime::SyntaxNode

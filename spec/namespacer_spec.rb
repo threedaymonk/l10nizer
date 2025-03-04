@@ -1,4 +1,4 @@
-require 'l10nizer/namespacer'
+require "l10nizer/namespacer"
 
 RSpec.describe L10nizer::Namespacer do
   subject(:namespacer) { described_class.new }
