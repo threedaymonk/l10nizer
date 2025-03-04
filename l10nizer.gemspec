@@ -12,10 +12,10 @@ spec = Gem::Specification.new do |s|
 
   s.require_paths     = ["lib"]
 
-  s.add_runtime_dependency "treetop",  ">= 1.2.6"
-  s.add_runtime_dependency "polyglot", ">= 0.2.5"
+  s.add_runtime_dependency "treetop", "~> 1.6"
+  s.add_runtime_dependency "polyglot", "~> 0.3.5"
 
-  s.add_development_dependency "rake"
+  s.add_development_dependency "rake", "~> 13"
   s.add_development_dependency "rspec", "~> 3"
-  s.add_development_dependency "rubocop", "~> 0.30.0"
+  s.add_development_dependency "rubocop", "~> 1.73"
 end
