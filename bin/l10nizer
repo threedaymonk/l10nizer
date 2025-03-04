@@ -8,10 +8,11 @@ templates = Dir['app/views/**/*.html.erb']
 raise "Can't find any templates in app/views." unless templates.any?
 
 keygen = L10nizer::KeyGenerator.new
+namespacer = L10nizer::Namespacer.new
 l10ns = {}
 
 templates.each do |path|
-  keygen.namespace = path.sub(/\.html\.erb$/, '').split('/').drop(2).join('.')
+  keygen.namespace = namespacer.call(path)
   source = File.read(path)
   l10nizer = L10nizer::Processor.new(source, keygen)
   l10ns.merge!(l10nizer.l10ns)
