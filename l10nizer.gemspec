@@ -7,8 +7,6 @@ spec = Gem::Specification.new do |s|
   s.author            = "Paul Battley"
   s.email             = "pbattley@gmail.com"
 
-  s.has_rdoc          = false
-
   s.files             = Dir["{bin,lib}/**/*"]
   s.executables       = Dir["bin/**"].map { |f| File.basename(f) }
 
