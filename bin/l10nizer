@@ -1,33 +1,90 @@
 #!/usr/bin/env ruby
-require 'l10nizer'
-require 'yaml'
-require 'fileutils'
+require "l10nizer"
+require "yaml"
+require "fileutils"
+require "optparse"
 
-Dir.chdir(ARGV.first) if ARGV.first
-templates = Dir['app/views/**/*.html.erb']
-raise "Can't find any templates in app/views." unless templates.any?
+executable = File.basename(__FILE__)
+
+options = {
+  mode: :check,
+  path: "."
+}
+
+parser = OptionParser.new { |opts|
+  opts.banner = "Usage: #{executable} [options]"
+  opts.separator <<~STRING
+
+    #{executable} performs Automatic ex post facto localisation of Rails
+    templates.
+
+    By default, it will check for unlocalised text in templates, returning 0
+    if no such text is found, or returning 1 if it is found.
+
+    If the --extract option is passed, this text will be extracted from the
+    templates and deposited in a new file in config/locales/l10nized.yml.
+
+  STRING
+
+  opts.on(
+    "-e", "--extract",
+    "Replace strings with t() and write a locale file"
+  ) do
+    options[:mode] = :extract
+  end
+  opts.on(
+    "-p", "--path", String,
+    "Path to Rails app (default: #{options[:path]})"
+  ) do |str|
+    options[:path] = str
+  end
+  opts.on(
+    "-h", "--help",
+    "Display this help message and exit"
+  ) do
+    puts opts
+    exit
+  end
+
+  opts.separator ""
+}
+
+parser.parse!
+
+Dir.chdir(options[:path])
+templates = Dir[File.join("app", "views", "**", "*.html.erb")]
+raise "Can't find any templates in #{options[:path]}" unless templates.any?
 
 keygen = L10nizer::KeyGenerator.new
 namespacer = L10nizer::Namespacer.new
+files_with_text = []
 l10ns = {}
 
 templates.each do |path|
   keygen.namespace = namespacer.call(path)
-  source = File.read(path)
-  l10nizer = L10nizer::Processor.new(source, keygen)
-  l10ns.merge!(l10nizer.l10ns)
-  File.open(path, 'w') do |f|
-    f << l10nizer.reformed
-  end
+  l10nizer = L10nizer::Processor.new(File.read(path), keygen)
+  next unless l10nizer.l10ns.any?
+
+  files_with_text << path
+  next unless options[:mode] == :extract
+
+  l10ns.merge! l10nizer.l10ns
+  File.write path, l10nizer.reformed
 end
 
-l10ns = l10ns.inject({}){ |hash, (key, value)|
-  parts = key.split('.')
-  parts[0..-2].inject(hash) { |h, k| h[k] ||= {} }[parts.last] = value
-  hash
-}
+if files_with_text.any?
+  warn "Found unlocalised text in the following files:",
+    *files_with_text
 
-FileUtils.mkdir_p('config/locales')
-File.open('config/locales/l10nized.yml', 'w') do |f|
-  f << {'en' => l10ns}.to_yaml
+  case options[:mode]
+  when :extract
+    tree = L10nizer::LocaleGenerator.new.call(l10ns)
+    path = File.join("config", "locales", "l10nized.yml")
+    FileUtils.mkdir_p File.dirname(path)
+    File.write path, YAML.dump(tree)
+  when :check
+    exit 1
+  end
+else
+  warn "No unlocalised text found."
 end
