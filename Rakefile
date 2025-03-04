@@ -1,4 +1,5 @@
 require "rspec/core/rake_task"
+require "standard/rake"
 
 desc "Run the specs."
 RSpec::Core::RakeTask.new do |t|
@@ -6,11 +7,4 @@ RSpec::Core::RakeTask.new do |t|
   t.verbose = false
 end
 
-task default: :spec
-
-if Gem.loaded_specs.key?('rubocop')
-  require 'rubocop/rake_task'
-  RuboCop::RakeTask.new
-
-  task default: :rubocop
-end
+task default: %i[spec standard]
